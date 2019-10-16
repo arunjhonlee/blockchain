@@ -1,0 +1,78 @@
+pragma solidity 0.4.25;
+
+contract Messenger {
+    struct customer{
+        string name;
+        uint256 age;
+        uint256 adharnumber;
+        uint256 accountnumber;
+        uint256 salary;
+        string location;
+        bool result;
+        bool accept;
+    }
+    struct dealer{
+        string name;
+        uint256 age;
+        uint256 adharnumber;
+        uint256 accountnumber;
+        uint256 salary;
+        string location;
+    }
+    struct insurance{
+        
+        uint256 salary;
+    }
+
+    
+  mapping (address =>customer)message;
+  mapping(address => dealer)deal;
+  mapping(address =>insurance)insu;
+
+  function sendMessage(address _recipient, string _name,uint256 _age,uint256 _adharnumber,uint256 _accountnumber,uint256 _salary,string _location){
+      
+    message[_recipient].name = _name;
+    message[_recipient].age = _age;
+    message[_recipient].adharnumber = _adharnumber;
+    message[_recipient].accountnumber = _accountnumber;
+    message[_recipient].salary = _salary;
+    message[_recipient].location = _location;
+    
+  }
+
+  function readMessage()view public returns (string,uint256,uint256,uint256,uint256,string,bool,bool) {
+    return (message[msg.sender].name,message[msg.sender].age,message[msg.sender].adharnumber,message[msg.sender].accountnumber,message[msg.sender].salary,message[msg.sender].location,message[msg.sender].result,message[msg.sender].accept);
+        }
+
+    function dealer1(address _verification){
+    deal[_verification].name=message[msg.sender].name;
+    deal[_verification].age=message[msg.sender].age;
+    deal[_verification].adharnumber=message[msg.sender].adharnumber;
+    deal[_verification].accountnumber=message[msg.sender].accountnumber;
+    deal[_verification].salary=message[msg.sender].salary;
+    deal[_verification].location= message[msg.sender].location;
+
+        
+    }        
+    function dealerread()view public returns(string,uint256,uint256,uint256,uint256,string){
+        return (deal[msg.sender].name,deal[msg.sender].age,deal[msg.sender].adharnumber,deal[msg.sender].accountnumber,deal[msg.sender].salary,deal[msg.sender].location);
+    }
+    function dealer2(address _bank){
+        if((deal[msg.sender].age>20) && (deal[msg.sender].age<70))
+        {
+            message[_bank].result= true;
+        }
+        
+    }
+    function check1(address _qwer){
+        insu[_qwer].salary=message[msg.sender].salary;
+    }
+
+   function check(address _asd) {
+    if((insu[msg.sender].salary>9000) &&(insu[msg.sender].salary<60000))
+    {
+        message[_asd].accept=true;
+    }
+   }
+
+}
